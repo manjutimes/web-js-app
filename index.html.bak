@@ -1,0 +1,194 @@
+<!--
+ * Copyright (c) 2020, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ -->
+
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="referrer" content="no-referrer"/>
+
+    
+    <!-- <link href="https://unpkg.com/json-formatter-js@2.3.4/dist/json-formatter.css" rel="stylesheet" type="text/css" /> -->
+    <link href="app.css" rel="stylesheet" type="text/css"/>
+
+    <style type="text/css">
+        .json-formatter-row .json-formatter-string,
+        .json-formatter-row .json-formatter-stringifiable {
+            white-space: unset !important;
+        }
+
+        .json-formatter-dark.json-formatter-row
+        .json-formatter-row {
+            line-height: 1.5;
+        }
+
+        .json-container {
+            background: #272822;
+            padding: 20px;
+        }
+
+        .json-formatter-string {
+            color: #fd971f !important;
+        }
+
+        .json-formatter-key,
+        .json-formatter-bracket {
+            color: #f9f8f5 !important;
+            letter-spacing: 0.5px;
+        }
+
+        .json-formatter-number {
+            color: #cc6633 !important;
+        }
+
+        .code {
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="root">
+        <div class="container">
+
+            <div class="header-title">
+                <h1>
+                    JavaScript Authentication Sample
+                </h1>
+            </div>
+            <div class="content">
+
+               
+
+               
+
+                <div id="logged-in-view" style="display:none;">
+                    <h2>Authentication Response</h2>
+                    <h4 className="sub-title">
+                        Derived by the&nbsp;
+                        <code className="inline-code-block">
+                            <a href="https://www.npmjs.com/package/@asgardeo/auth-spa/v/latest"
+                                target="_blank">
+                                @asgardeo/auth-spa
+                            </a>
+                        </code>&nbsp;SDK
+                    </h4>
+                    <div class="json">
+                        <div id="authentication-response" class="json-container"></div>
+                    </div>
+
+                    <h2 class="mb-0 mt-4">ID token</h2>
+
+                    <div class="row">
+                        <div class="column">
+                            <h5><b>Encoded</b></h5>
+                            <div class="code">
+                                <code>
+                                    <span class="id-token-0" id="id-token-0"></span>.<span class="id-token-1" id="id-token-1"></span>.<span class="id-token-2" id="id-token-2"></span>
+                                </code>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="json">
+                                <h5><b>Decoded:</b> Header</h5>
+                                <div id="id-token-header" class="json-container"></div>
+                            </div>
+
+                            <div class="json">
+                                <h5><b>Decoded:</b> Payload</h5>
+                                <div id="id-token-payload" class="json-container"></div>
+                            </div>
+
+                            <div class="json">
+                                <h5>Signature</h5>
+                                <div class="code">
+                                    <code>
+                                        HMACSHA256(
+                                            <br />
+                                            &nbsp;&nbsp;<span class="id-token-0">base64UrlEncode(
+                                                <span class="id-token-1">header</span>)</span> + "." + <br />
+                                            &nbsp;&nbsp;<span class="id-token-0">base64UrlEncode(
+                                                <span class="id-token-1">payload</span>)</span>,&nbsp;
+                                            <span class="id-token-1">your-256-bit-secret</span> <br />
+                                        );
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn primary mt-4" onClick="handleLogout()">Logout</button>
+                </div>
+
+                <div id="logged-out-view" style="display:none;">
+                   
+                   
+                    <button class="btn primary" onClick="handleLogin()">Login</button>
+                </div>
+
+                <div id="user-denied-logout-view" style="display:none;" className="ui visible negative message">
+                    <h3 className="mt-4 b">End User denied the logout request</h3>
+                    <p className="my-4">
+                        <a className="link-button pointer" onClick="handleLogin()" role="button">
+                            Try Log in again
+                        </a>
+                        &nbsp;or&nbsp;
+                        <a className="link-button pointer" onClick="handleLogout()" role="button">
+                            Log out from the application.
+                        </a>
+                    </p>
+                </div>
+
+                <div id="error-authenticating-view" style="display:none;" className="ui visible negative message">
+                    <div class="segment-form">
+                        <div class="ui visible negative message">
+                            <div class="header"><b>Authentication Error!</b></div>
+                            <p>Please check application configuration and try login again!.</p>
+                        </div>
+                    </div>
+                    <button class="btn primary" onClick="handleLogin()">Login</button>
+                </div>
+            </div>
+
+        </div>
+
+       
+    </div>
+
+    <!-- Add Asgardeo OIDC JS -->
+    <script src="https://unpkg.com/@asgardeo/auth-spa@latest/dist/asgardeo-spa.production.min.js"></script>
+    <script src="https://unpkg.com/json-formatter-js@latest/dist/json-formatter.umd.js"></script>
+
+    <!-- Asgardeo SDK Init Config -->
+    <script>
+        const authConfig = {
+            // ClientID generated for the application
+            clientID: "S1oSOFHoFpj4U8SRfEONWfxN48Ia",
+            // After login redirect URL - We have use app root path, since this is a SPA
+            // (Add it in application OIDC settings "Authorized redirect Url")
+            signInRedirectURL: "https://34f11a4c-2e81-4e6f-9f38-5eaaf9464de4.e1-us-east-azure.choreoapps.dev",
+            // After logout redirect URL - We have use app root path, since this is a SPA
+            // Asgardeo base url - Contains domain with the tenant
+            baseUrl: "https://api.asgardeo.io/t/myleafphotography",
+            scope: [ "profile" ]
+        };
+    </script>
+
+    <script type="application/javascript" src="app.js"></script>
+</body>
+</html>
