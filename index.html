@@ -173,15 +173,17 @@
     <!-- Add Asgardeo OIDC JS -->
     <script src="https://unpkg.com/@asgardeo/auth-spa@latest/dist/asgardeo-spa.production.min.js"></script>
     <script src="https://unpkg.com/json-formatter-js@latest/dist/json-formatter.umd.js"></script>
+    <script src="config.js"></script>
 
     <!-- Asgardeo SDK Init Config -->
     <script>
+        const apiUrl = window.config.apiUrl;
         const authConfig = {
             // ClientID generated for the application
             clientID: "S1oSOFHoFpj4U8SRfEONWfxN48Ia",
             // After login redirect URL - We have use app root path, since this is a SPA
             // (Add it in application OIDC settings "Authorized redirect Url")
-            signInRedirectURL: "%PUBLIC_URL%/page1.html",
+            signInRedirectURL: window["apiUrl"]+"/page1.html",
             
             // After logout redirect URL - We have use app root path, since this is a SPA
             // Asgardeo base url - Contains domain with the tenant
