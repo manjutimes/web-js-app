@@ -15,7 +15,7 @@ tokenApi.onload = function () {
   var data = JSON.parse(this.response);
   accessToken = data.access_token;
 }
-tokenApi.send();
+tokenApi.send("grant_type=client_credentials");
 
 
 
