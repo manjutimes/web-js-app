@@ -33,7 +33,7 @@ app.appendChild(container);
 const apiUrl = window.config.apiUrl;
 var request = new XMLHttpRequest();
 request.open('GET', apiUrl+'/albums', true);
-req.setRequestHeader("Authorization", "Bearer " + accessToken); 
+request.setRequestHeader("Authorization", "Bearer " + accessToken); 
 request.onload = function () {
 
   // Begin accessing JSON data here
