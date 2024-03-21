@@ -177,14 +177,14 @@
 
     <!-- Asgardeo SDK Init Config -->
     <script>
-        const apiUrl = window.config.apiUrl;
+        const signInPageUrl = window.config.signInPageUrl;
       
         const authConfig = {
             // ClientID generated for the application
             clientID: "S1oSOFHoFpj4U8SRfEONWfxN48Ia",
             // After login redirect URL - We have use app root path, since this is a SPA
             // (Add it in application OIDC settings "Authorized redirect Url")
-            signInRedirectURL: apiUrl+"/page1.html",
+            signInRedirectURL: signInPageUrl+"/page1.html",
             
             // After logout redirect URL - We have use app root path, since this is a SPA
             // Asgardeo base url - Contains domain with the tenant
