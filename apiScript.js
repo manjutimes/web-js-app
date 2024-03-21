@@ -12,8 +12,17 @@ const getClientCredentials = clientCredentials(
   consumerKey,
   consumerSecret
 );
-const auth = await getClientCredentials();
-const accessToken = auth.access_token;
+const getAccessToken = async () => {
+  try {
+    const auth = await getClientCredentials();
+    const accessToken = auth.access_token;
+    return accessToken;
+  } catch (error) {
+    console.error('Error fetching access token:', error);
+    throw error;
+  }
+};
+
 
 
 
@@ -32,7 +41,7 @@ app.appendChild(container);
 const apiUrl = window.config.apiUrl;
 var request = new XMLHttpRequest();
 request.open('GET', apiUrl+'/albums', true);
-req.setRequestHeader("Authorization", "Bearer " + accessToken); 
+req.setRequestHeader("Authorization", "Bearer " + getAccessToken); 
 request.onload = function () {
 
   // Begin accessing JSON data here
