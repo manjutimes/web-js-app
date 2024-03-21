@@ -1,3 +1,23 @@
+import oauth from 'axios-oauth-client'
+import axios from 'axios';
+
+const tokenUrl = window.config.tokenUrl;
+const consumerKey = window.config.consumerKey;
+const consumerSecret = window.config.consumerSecret;
+
+// consumerKey, consumerSecret and tokenUrl represent variables to which respective environment variables were read
+const getClientCredentials = oauth.clientCredentials(
+  axios.create(),
+  tokenUrl,
+  consumerKey,
+  consumerSecret
+);
+const auth = await getClientCredentials();
+const accessToken = auth.access_token;
+
+
+
+
 const app = document.getElementById('root');
 
 const logo = document.createElement('img');
@@ -12,6 +32,7 @@ app.appendChild(container);
 const apiUrl = window.config.apiUrl;
 var request = new XMLHttpRequest();
 request.open('GET', apiUrl+'/albums', true);
+req.setRequestHeader("Authorization", "Bearer " + accessToken); 
 request.onload = function () {
 
   // Begin accessing JSON data here
