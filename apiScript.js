@@ -1,4 +1,4 @@
-import oauth from 'axios-oauth-client'
+import oauth from 'axios-oauth-client';
 import axios from 'axios';
 
 const tokenUrl = window.config.tokenUrl;
