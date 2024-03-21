@@ -7,7 +7,7 @@ var tokenApi = new XMLHttpRequest();
 var accessToken = '';
 tokenApi.open('POST', tokenUrl, true);
 tokenApi.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-var encodedString = Base64.encode(consumerKey+':'+consumerSecret);
+var encodedString = btoa(consumerKey+':'+consumerSecret);
 tokenApi.setRequestHeader("Authorization", "Basic " + encodedString); 
 tokenApi.onload = function () {
 
