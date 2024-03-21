@@ -17,6 +17,7 @@ tokenApi.onload = function () {
 }
 tokenApi.send("grant_type=client_credentials");
 
+alert(accessToken);
 
 
 const app = document.getElementById('root');
