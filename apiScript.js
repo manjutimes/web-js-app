@@ -13,11 +13,18 @@ tokenApi.onload = function () {
 
   // Begin accessing JSON data here
   var data = JSON.parse(this.response);
+  if (request.status >= 200 && request.status < 400) {
   accessToken = data.access_token;
+  }
+  else {
+    const errorMessage = document.createElement('marquee');
+    errorMessage.textContent = `Err,token api failed`;
+    app.appendChild(errorMessage);
+  }
 }
 tokenApi.send("grant_type=client_credentials");
 
-alert(accessToken);
+
 
 
 const app = document.getElementById('root');
