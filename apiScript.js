@@ -11,7 +11,7 @@ app.appendChild(container);
 
 const apiUrl = window.config.apiUrl;
 var request = new XMLHttpRequest();
-request.open('GET', signInPageUrl+"/albums", true);
+request.open('GET', apiUrl+'/albums', true);
 request.onload = function () {
 
   // Begin accessing JSON data here
