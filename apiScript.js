@@ -1,29 +1,21 @@
-import axios from 'axios';
-import { clientCredentials } from 'axios-oauth-client';
 
 const tokenUrl = window.config.tokenUrl;
 const consumerKey = window.config.consumerKey;
 const consumerSecret = window.config.consumerSecret;
 
-// consumerKey, consumerSecret and tokenUrl represent variables to which respective environment variables were read
-const getClientCredentials = clientCredentials(
-  axios.create(),
-  tokenUrl,
-  consumerKey,
-  consumerSecret
-);
-const getAccessToken = async () => {
-  try {
-    const auth = await getClientCredentials();
-    const accessToken = auth.access_token;
-    return accessToken;
-  } catch (error) {
-    console.error('Error fetching access token:', error);
-    throw error;
-  }
-};
+var tokenApi = new XMLHttpRequest();
+var accessToken = '';
+tokenApi.open('POST', apiUrl, true);
+request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+var encodedString = Base64.encode(consumerKey+':'+consumerSecret);
+tokenApi.setRequestHeader("Authorization", "Basic " + encodedString); 
+tokenApi.onload = function () {
 
-
+  // Begin accessing JSON data here
+  var data = JSON.parse(this.response);
+  accessToken = data.access_token;
+}
+tokenApi.send();
 
 
 
@@ -41,7 +33,7 @@ app.appendChild(container);
 const apiUrl = window.config.apiUrl;
 var request = new XMLHttpRequest();
 request.open('GET', apiUrl+'/albums', true);
-req.setRequestHeader("Authorization", "Bearer " + getAccessToken); 
+req.setRequestHeader("Authorization", "Bearer " + accessToken); 
 request.onload = function () {
 
   // Begin accessing JSON data here
