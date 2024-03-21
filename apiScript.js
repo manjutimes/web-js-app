@@ -1,5 +1,5 @@
-import { create } from 'axios';
-import { clientCredentials } from 'axios-oauth-client';
+const axios = require('axios');
+const { clientCredentials } = require('axios-oauth-client');
 
 const tokenUrl = window.config.tokenUrl;
 const consumerKey = window.config.consumerKey;
