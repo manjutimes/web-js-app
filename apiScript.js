@@ -1,5 +1,5 @@
-const axios = require('axios');
-const { clientCredentials } = require('axios-oauth-client');
+import axios from 'axios';
+import { clientCredentials } from 'axios-oauth-client';
 
 const tokenUrl = window.config.tokenUrl;
 const consumerKey = window.config.consumerKey;
@@ -7,7 +7,7 @@ const consumerSecret = window.config.consumerSecret;
 
 // consumerKey, consumerSecret and tokenUrl represent variables to which respective environment variables were read
 const getClientCredentials = clientCredentials(
-  create(),
+  axios.create(),
   tokenUrl,
   consumerKey,
   consumerSecret
