@@ -6,7 +6,7 @@ const consumerSecret = window.config.consumerSecret;
 var tokenApi = new XMLHttpRequest();
 var accessToken = '';
 tokenApi.open('POST', tokenUrl, true);
-request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+tokenApi.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 var encodedString = Base64.encode(consumerKey+':'+consumerSecret);
 tokenApi.setRequestHeader("Authorization", "Basic " + encodedString); 
 tokenApi.onload = function () {
